@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post
+from .models import Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -13,9 +13,10 @@ class CommentSerializer(serializers.ModelSerializer):
         return request.user == obj.owner
 
     class Meta:
-        model = Post
-        fields = ['id', 'owner', 'post', 'created_at', 'updated_at', 'content', 'title', 'image']
+        model = Comment
+        fields = ['id', 'owner', 'is_owner', 'profile_id', 'profile_image', 'post', 'created_at', 'updated_at',
+                  'content', ]
 
 
-class CommentDetailSerializer(serializers.ModelSerializer, CommentSerializer):
+class CommentDetailSerializer(CommentSerializer):
     post = serializers.ReadOnlyField(source='post.id')
