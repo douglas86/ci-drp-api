@@ -5,6 +5,9 @@ from .models import Profile
 from .serializers import ProfileSerializer
 
 
+# example of async generator and async coroutine
+# https://superfastpython.com/asyncio-async-for/
+
 class ProfileList(APIView):
     model = Profile
 
