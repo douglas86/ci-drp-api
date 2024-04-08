@@ -43,7 +43,12 @@ class PostDetailViewTests(APITestCase):
 
     def test_user_can_update_own_post(self):
         self.client.login(username='adam', password='pass')
-        response = self.client.put('/posts/1/', {'title': 'Test Post'})
+        response = self.client.put('/posts/2/', {'title': 'Test Post'})
         post = Post.objects.filter(pk=1).first()
         self.assertEqual(post.title, 'Test Post')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_can_not_update_a_post_they_dont_own(self):
+        self.client.login(username='adam', password='pass')
+        response = self.client.put('/posts/1/', {'title': 'Test Post'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
