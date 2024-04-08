@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Profile
 from .serializers import ProfileSerializer
+from drf_api.permissions import IsOwnerOrReadOnly
 
 
 # example of async generator and async coroutine
@@ -24,13 +25,14 @@ class ProfileList(APIView):
 
     def get(self, request):
         profiles = asyncio.run(self.async_coroutine())
-        serializer = ProfileSerializer(profiles, many=True)
+        serializer = ProfileSerializer(profiles, many=True, context={'request': request})
         return Response(serializer.data)
 
 
 class ProfileDetail(APIView):
     model = Profile
     serializer_class = ProfileSerializer
+    permission_classes = [IsOwnerOrReadOnly, ]
 
     def get_object(self, pk):
         try:
@@ -41,14 +43,14 @@ class ProfileDetail(APIView):
 
     def get(self, request, pk):
         profile = self.get_object(pk)
-        serializer = ProfileSerializer(profile)
+        self.check_object_permissions(request, profile)
+        serializer = ProfileSerializer(profile, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
         profile = self.get_object(pk)
-        serializer = ProfileSerializer(profile, data=request.data)
+        serializer = ProfileSerializer(profile, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
