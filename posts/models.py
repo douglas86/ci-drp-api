@@ -1,12 +1,9 @@
-import uuid
-
 from django.db import models
 from django.contrib.auth.models import User
 
 
 # Create your models here.
 class Post(models.Model):
-
     image_filter_choices = [
         ('_1977', '1977'),
         ('brannan', 'Brannan'),
@@ -24,7 +21,6 @@ class Post(models.Model):
         ('xpro2', 'X-pro 11'),
     ]
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
