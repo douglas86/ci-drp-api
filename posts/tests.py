@@ -25,6 +25,7 @@ class PostListViewTests(APITestCase):
         response = self.client.post('/posts/', {'title': 'Test Post'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+
 class PostDetailViewTests(APITestCase):
     def setUp(self):
         adam = User.objects.create_user(username='adam', password='pass')
