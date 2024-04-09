@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-
 from posts.models import Post
 
 
@@ -12,7 +11,7 @@ class Like(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        unique_together = ('owner', 'post')
+        unique_together = ['owner', 'post']
 
     def __str__(self):
         return f'{self.owner} likes {self.post}'
