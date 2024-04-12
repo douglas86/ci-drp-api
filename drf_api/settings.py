@@ -23,6 +23,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+SITE_ID = 1
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [(
@@ -71,12 +72,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'cloudinary_storage',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'cloudinary',
     'rest_framework',
     'django_filters',
     'rest_framework.authtoken',
     'dj_rest_auth',
-    'django.contrib.sites',
     'allauth',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
