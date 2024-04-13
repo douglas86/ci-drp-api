@@ -42,6 +42,7 @@ class ProfileList(ViewSet):
             follwers_count=Count('owner__followed', distinct=True),
             following_count=Count('owner__following', distinct=True),
         )
+
         yield profiles
 
     async def async_coroutine(self):
@@ -60,6 +61,7 @@ class ProfileList(ViewSet):
         Used to send message to api.
         :return:
         """
+
         return Response(
             {"message": self.message}, status=status.HTTP_200_OK
         )
@@ -80,14 +82,51 @@ class ProfileList(ViewSet):
         return Response(serializer.data)
 
 
-class ProfileDetail(generics.RetrieveUpdateAPIView):
+class ProfileDetail(ViewSet):
     """
     Retrieve or update a profile if you're the owner.
     """
+
+    model = Profile
+    pk = None
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Profile.objects.annotate(
-        posts_count=Count('owner__post', distinct=True),
-        follwers_count=Count('owner__followed', distinct=True),
-        following_count=Count('owner__following', distinct=True),
-    )
-    serializer_class = ProfileSerializer
+
+    async def async_generator(self):
+        """
+        Async generator method.
+        Used to fetch profile by id from database.
+        :return:
+        """
+
+        profiles = self.model.objects.filter(pk=self.pk).annotate(
+            posts_count=Count('owner__post', distinct=True),
+            follwers_count=Count('owner__followed', distinct=True),
+            following_count=Count('owner__following', distinct=True),
+        )
+
+        yield profiles
+
+    async def async_coroutine(self):
+        """
+        Async coroutine method.
+        Used to iterate around profiles from async_generator method
+        :return: profiles from async_generator
+        """
+
+        async for profile in self.async_generator():
+            return profile
+
+    def retrieve(self, request, pk=None):
+        """
+        Async retrieve method.
+        Used to send data once api endpoint is called.
+        :param pk: primary key of profile
+        :param request:
+        :return:
+        """
+
+        self.pk = pk
+        profile = asyncio.run(self.async_coroutine())
+        serializer = ProfileSerializer(profile, many=True, context={'request': request})
+
+        return Response(serializer.data)
