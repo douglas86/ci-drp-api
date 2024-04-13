@@ -23,7 +23,6 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-SITE_ID = 1
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [(
@@ -80,6 +79,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'dj_rest_auth',
     'allauth',
+    'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'adrf',
@@ -91,6 +91,7 @@ INSTALLED_APPS = [
     'followers',
 ]
 
+SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -101,6 +102,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
