@@ -13,6 +13,7 @@ constantly==23.10.4
 cryptography==42.0.5
 daphne==4.1.0
 defusedxml==0.7.1
+dj-database-url==2.1.0
 dj-rest-auth==5.1.0
 Django==4.2.11
 django-allauth==0.61.1
@@ -22,11 +23,14 @@ django-filter==24.2
 djangorestframework==3.15.1
 djangorestframework-simplejwt==5.3.1
 drfasyncview==0.2.3
+gunicorn==21.2.0
 hyperlink==21.0.0
 idna==3.6
 incremental==22.10.0
 oauthlib==3.2.2
+packaging==24.0
 pillow==10.3.0
+psycopg2-binary==2.9.9
 pyasn1==0.6.0
 pyasn1_modules==0.4.0
 pycparser==2.22
