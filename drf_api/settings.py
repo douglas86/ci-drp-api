@@ -27,17 +27,6 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [(
-        'rest_framework.authentication.SessionAuthentication'
-        if 'DEV' in os.environ
-        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    )],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-    'DATETIME_FORMAT': '%d %b %Y',
-}
-
 # if 'DEV' not in os.environ:
 #     DATABASES = {
 #         'default': {
@@ -118,6 +107,17 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     'allauth.account.middleware.AccountMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [(
+        'rest_framework.authentication.SessionAuthentication'
+        if DEBUG == 'False'
+        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+    )],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DATETIME_FORMAT': '%d %b %Y',
+}
 
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
