@@ -124,7 +124,7 @@ if DEBUG == 'False':
         'rest_framework.renderers.JSONRenderer',
     ]
     CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
+        os.environ.get('DJANGO_CLIENT_ORIGIN')
     ]
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
