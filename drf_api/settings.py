@@ -129,12 +129,11 @@ if DEBUG == 'False':
     CORS_ALLOWED_ORIGINS = [
         os.environ.get('DJANGO_CLIENT_ORIGIN')
     ]
+    print('client origin', os.environ.get('DJANGO_CLIENT_ORIGIN'))
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
         "http://localhost:3000/"
     ]
-
-print('client origin', os.environ.get('DJANGO_CLIENT_ORIGIN'))
 
 # if 'CLIENT_ORIGIN' in os.environ:
 #     CORS_ALLOWED_ORIGINS = [
