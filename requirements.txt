@@ -14,7 +14,7 @@ cryptography==42.0.5
 daphne==4.1.0
 defusedxml==0.7.1
 dj-database-url==2.1.0
-dj-rest-auth==5.1.0
+dj-rest-auth==2.1.9
 Django==4.2.11
 django-allauth==0.61.1
 django-cloudinary-storage==0.3.0
