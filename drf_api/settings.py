@@ -114,6 +114,9 @@ REST_FRAMEWORK = {
         if DEBUG == 'True'
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     )],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d %b %Y',
