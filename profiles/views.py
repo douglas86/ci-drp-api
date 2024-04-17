@@ -114,7 +114,8 @@ class ProfileDetail(ViewSet):
         """
 
         async for profile in self.async_generator():
-            return profile
+            results = await profile
+            return results
 
     def retrieve(self, request, pk=None):
         """

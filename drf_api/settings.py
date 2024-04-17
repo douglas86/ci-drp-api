@@ -115,11 +115,14 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [(
-        'rest_framework.authentication.SessionAuthentication'
-        if DEBUG == 'True'
-        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    )],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication'],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [(
+    #     'rest_framework.authentication.SessionAuthentication'
+    #     if 'DEV' in os.environ
+    #     else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+    # ), 'rest_framework.authentication.BasicAuthentication', ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
     ],
@@ -135,23 +138,23 @@ if DEBUG == 'False':
     CORS_ALLOWED_ORIGINS = [
         os.environ.get('DJANGO_CLIENT_ORIGIN')
     ]
-    print('client origin', os.environ.get('DJANGO_CLIENT_ORIGIN'))
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
         "http://localhost:3000/"
     ]
 
-# if 'CLIENT_ORIGIN' in os.environ:
-#     CORS_ALLOWED_ORIGINS = [
-#         os.environ.get('CLIENT_ORIGIN')
-#     ]
-# else:
-#     CORS_ALLOWED_ORIGIN_REGEXES = [
-#         "http://localhost:3000/"
-#     ]
+if 'CLIENT_ORIGIN' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        os.environ.get('CLIENT_ORIGIN')
+    ]
+else:
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        "http://localhost:3000/"
+    ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
 CORS_ALLOW_METHODS = [
     "DELETE",
